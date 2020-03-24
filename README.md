@@ -1,2 +1,2 @@
 # chronos
-todos &amp; time logger
+todos & time logger
