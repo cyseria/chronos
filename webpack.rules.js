@@ -40,15 +40,19 @@ module.exports = [
       },
     ]
   },
+  // {
+  //   test: /\.(png|jpe?g|gif|jp2|webp)$/,
+  //   use: [
+  //     {
+  //       loader: 'url-loader',
+  //       options: {
+  //         limit: 8192
+  //       }
+  //     }
+  //   ]
+  // },
   {
-    test: /\.(png|jpe?g|gif|jp2|webp)$/,
-    use: [
-      {
-        loader: 'url-loader',
-        options: {
-          limit: 8192
-        }
-      }
-    ]
+    test: /\.(png|jpg)$/,
+    loader: 'url?limit=25000'
   }
 ];
