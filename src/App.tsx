@@ -1,8 +1,9 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import { Progress } from './components/Progress';
 
-import './index.css';
-import './app.scss';
-ReactDOM.render(<div>
-    <h1>💖 Hello Todo aaa!</h1>
-</div>, document.getElementById('root'));
+export const App = () => {
+    return <div>
+         <h1>💖 Hello Todo !</h1>
+         <Progress title="2020-03-19" beginText="00:00" endText="00:00" notes="13:34:24" progress={50}/>
+    </div>
+}
