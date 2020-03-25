@@ -1,14 +1,22 @@
+
+$bg-color: #0f4c81;
+$line-color: #f46f60;
+$font-color: #f0ece3;
+$font-color-dark: #3b4141;
+
+// @todo 找个绿色的 icon 
+$color-green: #bdd340;
+
 .progress {
-    width: 300px;
-    border: 1px solid #ccc;
+    width: 360px;
     margin: 10px;
-    background-color: #58a;
+    background-color: $bg-color;
     padding: 10px;
-    color: #fff;
+    color: $font-color;
     .progress-title {
         display: flex;
         justify-content: space-between;
-        margin: 0 0 30px;
+        margin: 0 0 60px;
         font-weight: 300;
     }
     .progress-content {
@@ -28,7 +36,7 @@
         position: relative;
         flex: 1;
         height: $progress-line;
-        background: linear-gradient(to right, transparent 60%, #fff 0);
+        background: linear-gradient(to right, transparent 60%, $font-color 0);
         background-size: 5px 100%;
         margin: 0 10px;
         .progress-line-range {
@@ -37,19 +45,23 @@
             left: 0;
             width: 50%;
             height: 100%;
-            background-color: antiquewhite;
+            background-color: $line-color;
         }
     }
+    $cur-icon-size: 36px;
     .progress-current {
         position: absolute;
-        left: 50%;
-        top: -10px - $progress-line;
+        left: calc(50% - #{$cur-icon-size / 2});
+        top: -20px - $progress-line;
         $tool-tips-height: 12px * 1.5;
         z-index: 1;
         .tool-tips {
             color: #333;
             padding: 1px 8px;
             position: relative;
+            // @todo: 这里需要根据 icon 的大小计算
+            top: -8px;
+            left: -10px;
             background-color: #fff;
             font-size: 13px;
             line-height: 1.5;
@@ -67,6 +79,9 @@
                 border-bottom: 5px solid transparent;
                 border-left: 5px solid transparent;
             }
+        }
+        .person-icon {
+            font-size: $cur-icon-size;
         }
     }
 }
