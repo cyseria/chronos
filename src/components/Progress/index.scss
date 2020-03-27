@@ -1,11 +1,9 @@
+@import '../../var.scss';
 
-$bg-color: #0f4c81;
-$line-color: #f46f60;
-$font-color: #f0ece3;
-$font-color-dark: #3b4141;
-
-// @todo 找个绿色的 icon 
-$color-green: #bdd340;
+$bg-color: $color-blue;
+$line-color: $color-pink;
+$font-color: $color-white;
+$font-color-dark: $color-dark;
 
 .progress {
     width: 360px;
