@@ -1,19 +1,31 @@
+@import '../../var.scss';
+
+$bg-color: $color-blue;
+$line-color: $color-pink;
+$font-color: $color-white;
+$font-color-dark: $color-dark;
+
 .progress {
-    width: 300px;
-    border: 1px solid #ccc;
     margin: 10px;
-    background-color: #58a;
+    background-color: $bg-color;
     padding: 10px;
-    color: #fff;
-    .progress-title {
-        display: flex;
-        justify-content: space-between;
-        margin: 0 0 30px;
-        font-weight: 300;
+    color: $font-color;
+    position: relative;
+
+    .progress-percents {
+        color: #ccc;
+        font-size: 33px;
+        position: absolute;
+        transform: rotateZ(10deg);
+        opacity: 0.7;
+        right: 6px;
+        top: 3px;
     }
+    
     .progress-content {
         display: flex;
         align-items: baseline;
+        padding-top: 50px;
     }
     .progress-begin-text,
     .progress-end-text {
@@ -28,32 +40,45 @@
         position: relative;
         flex: 1;
         height: $progress-line;
-        background: linear-gradient(to right, transparent 60%, #fff 0);
+        background: linear-gradient(to right, transparent 60%, $font-color 0);
         background-size: 5px 100%;
         margin: 0 10px;
-        .progress-line-range {
+
+        &-content {
             position: absolute;
             top: 0;
             left: 0;
-            width: 50%;
             height: 100%;
-            background-color: antiquewhite;
+        }
+        .progress-line-range {
+            width: 100%;
+            height: 100%;
+            background-color: $line-color;
+            transition: all;
         }
     }
+    $cur-icon-size: 36px;
     .progress-current {
         position: absolute;
-        left: 50%;
-        top: -10px - $progress-line;
+        right: -62px;
+        top: -20px - $progress-line;
         $tool-tips-height: 12px * 1.5;
         z-index: 1;
         .tool-tips {
             color: #333;
             padding: 1px 8px;
             position: relative;
+            width: 80px;
+            // @todo: 这里需要根据 icon 的大小计算
+            top: -8px;
+            left: -21px;
             background-color: #fff;
             font-size: 13px;
             line-height: 1.5;
             border-radius: 12px * 1.5;
+            box-sizing: border-box;
+            text-align: center;
+            font-family: monospace;
             &:after {
                 content: '';
                 position: absolute;
@@ -68,5 +93,13 @@
                 border-left: 5px solid transparent;
             }
         }
+        .person-icon {
+            cursor: pointer;
+            font-size: $cur-icon-size;
+        }
+    }
+    .progress-tips {
+        margin-top: 6px;
+        text-align: center;
     }
 }
