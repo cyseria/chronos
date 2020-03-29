@@ -4,10 +4,6 @@ import { Icon } from '@befe/brick-hi';
 import { SvgWaixingren } from '../../images/icon';
 interface ProgressProps {
     /**
-     * 标题
-     */
-    title: string;
-    /**
      * 起点文字
      */
     beginText: string;
@@ -23,13 +19,13 @@ interface ProgressProps {
      * 当前进度
      */
     progress: string;
+    isDefaultTiming?: boolean;
 }
 
 export const Progress: React.FC<ProgressProps> = props => {
     return (
         <div className="progress">
-            <h3 className="progress-title">
-                <span>{props.title}</span>
+            <h3 className="progress-percents">
                 <span>{props.progress}%</span>
             </h3>
             <div className="progress-content">
@@ -48,6 +44,7 @@ export const Progress: React.FC<ProgressProps> = props => {
                 </div>
                 <span className="progress-end-text">{props.endText}</span>
             </div>
+            {props.isDefaultTiming ? <div className="progress-tips">时光流逝中，找点事开始做吧...</div>: ''}
         </div>
     );
 };

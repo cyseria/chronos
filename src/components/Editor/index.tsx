@@ -1,4 +1,3 @@
-import Prism from 'prismjs';
 import React, { useState, useCallback, useMemo } from 'react';
 import {
     Slate,
@@ -6,8 +5,6 @@ import {
     withReact,
     ReactEditor
 } from 'slate-react';
-// import { Text, createEditor, Node } from 'slate';
-// import { css } from 'emotion';
 import './index.scss';
 import { Editor, Transforms, Range, Point, createEditor, Node } from 'slate';
 import { withHistory } from 'slate-history';
@@ -127,19 +124,8 @@ const withShortcuts = (editor: ReactEditor) => {
     return editor;
 };
 
-interface ElementProps {
-    children: any;
-    element: Element;
-    attributes: {
-        'data-slate-node': 'element';
-        'data-slate-inline'?: true;
-        'data-slate-void'?: true;
-        dir?: 'rtl';
-        ref: any;
-    };
-}
 
-const Element = (props: EditableProps) => {
+const Element = (props: any) => {
     const { attributes, children, element } = props;
     switch (element.type) {
         case 'block-quote':

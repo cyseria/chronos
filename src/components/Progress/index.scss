@@ -6,20 +6,26 @@ $font-color: $color-white;
 $font-color-dark: $color-dark;
 
 .progress {
-    width: 360px;
     margin: 10px;
     background-color: $bg-color;
     padding: 10px;
     color: $font-color;
-    .progress-title {
-        display: flex;
-        justify-content: space-between;
-        margin: 0 0 60px;
-        font-weight: 300;
+    position: relative;
+
+    .progress-percents {
+        color: #ccc;
+        font-size: 33px;
+        position: absolute;
+        transform: rotateZ(10deg);
+        opacity: 0.7;
+        right: 6px;
+        top: 3px;
     }
+    
     .progress-content {
         display: flex;
         align-items: baseline;
+        padding-top: 50px;
     }
     .progress-begin-text,
     .progress-end-text {
@@ -91,5 +97,9 @@ $font-color-dark: $color-dark;
             cursor: pointer;
             font-size: $cur-icon-size;
         }
+    }
+    .progress-tips {
+        margin-top: 6px;
+        text-align: center;
     }
 }

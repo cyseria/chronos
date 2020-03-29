@@ -7,7 +7,8 @@ import { useInterval } from '../../utils/time';
 import dayjs from 'dayjs';
 import { mockData } from './mock';
 import Editor from '../../components/Editor';
-import { SvgScaleUp } from '@befe/brick-icon';
+import { SvgScaleUp, SvgHiFace } from '@befe/brick-icon';
+import { SvgTaiyang } from '../../images/icon';
 
 interface TimerProps {}
 
@@ -43,8 +44,9 @@ export const Timer: React.FC<TimerProps> = (props: TimerProps) => {
     const [second, setSecond] = React.useState(0);
     const [totalTime, setTotalTime] = React.useState(defaultEndTime);
 
+    const isDefaultTiming = (time: number) => time === defaultEndTime;
     useInterval(() => {
-        if (totalTime === defaultEndTime) {
+        if (isDefaultTiming(totalTime)) {
             setSecond(praseDateToSeconds(new Date()));
         } else {
             setSecond(second + 1);
@@ -59,8 +61,6 @@ export const Timer: React.FC<TimerProps> = (props: TimerProps) => {
     const totalHour = Math.floor(totalTime / 3600);
     const curTime =
         totalHour === 0 ? formatTime(second, 'm:s') : formatTime(second);
-
-    const today = dayjs().format('YYYY-MM-DD');
 
     const progress = ((second / totalTime) * 100).toFixed(1);
 
@@ -82,17 +82,27 @@ export const Timer: React.FC<TimerProps> = (props: TimerProps) => {
         );
     };
     return (
-        <div>
+        <>
+            <h1>
+                <Icon svg={SvgTaiyang} />
+                {dayjs().format('YYYY-MM-DD')}
+            </h1>
             <div className="countdown">
                 <InitButton num={5} />
                 <InitButton num={15} />
                 <InitButton num={30} />
                 <InitButton num={45} />
                 <InitButton num={60} />
-                <InputNumber className="custom-input-number" size={'xs'} mode={'strong'} precision={2}/>
+                <Button size="xs" icon={SvgHiFace}>自定义</Button>
+                {/* <InputNumber
+                    className="custom-input-number"
+                    size={'xs'}
+                    mode={'strong'}
+                    precision={2}
+                /> */}
             </div>
             <Progress
-                title={today}
+                isDefaultTiming={isDefaultTiming(totalTime)}
                 beginText={formatTime(defaultBeginTime, 'h:m')}
                 endText={formatTime(totalTime, 'h:m')}
                 notes={curTime}
@@ -106,6 +116,6 @@ export const Timer: React.FC<TimerProps> = (props: TimerProps) => {
                 <Icon className="editor-scale-icon" svg={SvgScaleUp} />
                 <Editor />
             </div>
-        </div>
+        </>
     );
 };
