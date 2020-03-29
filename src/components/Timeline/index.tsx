@@ -7,7 +7,6 @@
 import * as React from 'react';
 import './index.scss';
 import dayjs from 'dayjs';
-import { TimeRuler } from './time-ruler';
 
 interface TimeItem extends React.HTMLAttributes<HTMLDivElement> {
     beginTime: Date;
@@ -23,21 +22,6 @@ interface TimeItem extends React.HTMLAttributes<HTMLDivElement> {
 interface TimelineProps {
     items: TimeItem[];
 }
-
-// const mockItem = {
-//     beginTime: '09:43',
-//     endTime: '10:20',
-//     content: (
-//         <>
-//             <div className="title">comment #01</div>
-//             <div className="info">
-//                 the best animation , the best toturials you would ever see .
-//             </div>
-//             <div className="name">- dr. mohamed -</div>
-//         </>
-//     ),
-//     tags: ['aaaa', 'bbb']
-// };
 
 const TimelineItem: React.FC<TimeItem> = (props: TimeItem) => {
     return (

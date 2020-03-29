@@ -2,10 +2,12 @@ import * as React from 'react';
 import { Progress } from '../../components/Progress';
 import Timeline from '../../components/Timeline';
 import './index.scss';
-import { Button } from '@befe/brick-hi';
+import { Button, InputNumber, Icon } from '@befe/brick-hi';
 import { useInterval } from '../../utils/time';
 import dayjs from 'dayjs';
 import { mockData } from './mock';
+import Editor from '../../components/Editor';
+import { SvgScaleUp } from '@befe/brick-icon';
 
 interface TimerProps {}
 
@@ -50,7 +52,7 @@ export const Timer: React.FC<TimerProps> = (props: TimerProps) => {
         if (second === totalTime) {
             // 完成了一个时间，可以重新开始
             setSecond(praseDateToSeconds(new Date()));
-            setTotalTime(defaultEndTime)
+            setTotalTime(defaultEndTime);
         }
     }, 1000);
 
@@ -66,57 +68,28 @@ export const Timer: React.FC<TimerProps> = (props: TimerProps) => {
         setTotalTime(time);
         setSecond(0);
     };
+
+    const InitButton = (props: { num: number }) => {
+        return (
+            <Button
+                size="xs"
+                onClick={() => {
+                    handleResetTime(props.num * 60);
+                }}
+            >
+                {props.num}
+            </Button>
+        );
+    };
     return (
         <div>
             <div className="countdown">
-            <Button
-                    type="important"
-                    onClick={() => {
-                        handleResetTime(1 * 60);
-                    }}
-                >
-                    1
-                </Button>
-            <Button
-                    type="important"
-                    onClick={() => {
-                        handleResetTime(5 * 60);
-                    }}
-                >
-                    5
-                </Button>
-                <Button
-                    type="important"
-                    onClick={() => {
-                        handleResetTime(15 * 60);
-                    }}
-                >
-                    15
-                </Button>
-                <Button
-                    type="important"
-                    onClick={() => {
-                        handleResetTime(30 * 60);
-                    }}
-                >
-                    30
-                </Button>
-                <Button
-                    type="important"
-                    onClick={() => {
-                        handleResetTime(45 * 60);
-                    }}
-                >
-                    45
-                </Button>
-                <Button
-                    type="important"
-                    onClick={() => {
-                        handleResetTime(60 * 60);
-                    }}
-                >
-                    60
-                </Button>
+                <InitButton num={5} />
+                <InitButton num={15} />
+                <InitButton num={30} />
+                <InitButton num={45} />
+                <InitButton num={60} />
+                <InputNumber className="custom-input-number" size={'xs'} mode={'strong'} precision={2}/>
             </div>
             <Progress
                 title={today}
@@ -125,8 +98,14 @@ export const Timer: React.FC<TimerProps> = (props: TimerProps) => {
                 notes={curTime}
                 progress={progress}
             />
-            <Timeline items={mockData} />
-            {/* <textarea /> */}
+            <div className="timeline-wrap">
+                <Timeline items={mockData} />
+            </div>
+
+            <div className="editor">
+                <Icon className="editor-scale-icon" svg={SvgScaleUp} />
+                <Editor />
+            </div>
         </div>
     );
 };
