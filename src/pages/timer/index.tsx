@@ -83,24 +83,23 @@ export const Timer: React.FC<TimerProps> = (props: TimerProps) => {
     };
     return (
         <>
-            <h1>
-                <Icon svg={SvgTaiyang} />
-                {dayjs().format('YYYY-MM-DD')}
-            </h1>
-            <div className="countdown">
-                <InitButton num={5} />
-                <InitButton num={15} />
-                <InitButton num={30} />
-                <InitButton num={45} />
-                <InitButton num={60} />
-                <Button size="xs" icon={SvgHiFace}>自定义</Button>
-                {/* <InputNumber
-                    className="custom-input-number"
-                    size={'xs'}
-                    mode={'strong'}
-                    precision={2}
-                /> */}
-            </div>
+            <header className="time-header">
+                <h1>
+                    <Icon svg={SvgTaiyang} />
+                    {dayjs().format('YYYY-MM-DD')}
+                </h1>
+                <div className="countdown">
+                    <InitButton num={5} />
+                    <InitButton num={15} />
+                    <InitButton num={30} />
+                    <InitButton num={45} />
+                    <InitButton num={60} />
+                    <Button size="xs" icon={SvgHiFace}>
+                        自定义
+                    </Button>
+                </div>
+            </header>
+
             <Progress
                 isDefaultTiming={isDefaultTiming(totalTime)}
                 beginText={formatTime(defaultBeginTime, 'h:m')}
@@ -115,6 +114,9 @@ export const Timer: React.FC<TimerProps> = (props: TimerProps) => {
             <div className="editor">
                 <Icon className="editor-scale-icon" svg={SvgScaleUp} />
                 <Editor />
+            </div>
+            <div className="time-footer">
+                <Button type="important">提交</Button>
             </div>
         </>
     );

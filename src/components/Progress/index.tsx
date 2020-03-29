@@ -26,7 +26,8 @@ export const Progress: React.FC<ProgressProps> = props => {
     return (
         <div className="progress">
             <h3 className="progress-percents">
-                <span>{props.progress}%</span>
+                <span className="progress-percents-1">{props.progress}%</span>
+                <span className="progress-percents-2">{props.progress}%</span>
             </h3>
             <div className="progress-content">
                 <span className="progress-begin-text">{props.beginText}</span>
