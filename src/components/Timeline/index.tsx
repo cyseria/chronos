@@ -91,11 +91,8 @@ const Timeline: React.FunctionComponent<TimelineProps> = props => {
         <ul className="timeline">
             {/* <TimeRuler /> */}
             {props.items.map((item, index) => {
-                // @todo: 根据时间粒度，生成 min-height 和 margin 传入
                 const marginTop = getMarginTop(prevEndTime, item.beginTime);
                 const minHeight = getMinHeight(item.beginTime, item.endTime);
-                console.log('diff', marginTop, minHeight);
-                console.log(marginTop !== 0);
                 prevEndTime = item.endTime;
 
                 return (

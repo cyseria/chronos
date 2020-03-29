@@ -2,7 +2,6 @@ import * as React from 'react';
 import './index.scss';
 import { Icon } from '@befe/brick-hi';
 import { SvgWaixingren } from '../../images/icon';
-// import './a'
 interface ProgressProps {
     /**
      * 标题
@@ -23,7 +22,7 @@ interface ProgressProps {
     /**
      * 当前进度
      */
-    progress: number;
+    progress: string;
 }
 
 export const Progress: React.FC<ProgressProps> = props => {
@@ -36,11 +35,16 @@ export const Progress: React.FC<ProgressProps> = props => {
             <div className="progress-content">
                 <span className="progress-begin-text">{props.beginText}</span>
                 <div className="progress-line">
-                    <div className="progress-current">
-                        <div className="tool-tips">{props.notes}</div>
-                        <Icon svg={SvgWaixingren} className="person-icon"/>
+                    <div
+                        className="progress-line-content"
+                        style={{ width: props.progress + '%' }}
+                    >
+                        <div className="progress-current">
+                            <div className="tool-tips">{props.notes}</div>
+                            <Icon svg={SvgWaixingren} className="person-icon" />
+                        </div>
+                        <div className="progress-line-range" />
                     </div>
-                    <div className="progress-line-range" />
                 </div>
                 <span className="progress-end-text">{props.endText}</span>
             </div>
