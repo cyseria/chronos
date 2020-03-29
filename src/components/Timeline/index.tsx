@@ -6,108 +6,112 @@
 
 import * as React from 'react';
 import './index.scss';
+import dayjs from 'dayjs';
+import { TimeRuler } from './time-ruler';
 
-interface TimeItem {
-    beginTime: string;
-    endTime: string;
+interface TimeItem extends React.HTMLAttributes<HTMLDivElement> {
+    beginTime: Date;
+    endTime: Date;
     content: string | React.ReactNode;
     tags: string[];
+    /**
+     * 是否展示开始时间，当上一个结束时间跟开始时间相同的时候，则不展示
+     */
+    showStartTime?: boolean;
 }
 
 interface TimelineProps {
-    items: TimeItem[]
+    items: TimeItem[];
 }
 
-const mockItem =  {
-    beginTime: '09:43',
-    endTime: '10:20',
-    content: (<>
-        <div className="title">comment #01</div>
-    <div className="info">
-        the best animation , the best toturials you would ever see .
-    </div>
-    <div className="name">- dr. mohamed -</div>
-    </>),
-    tags: ['aaaa', 'bbb']
-}
-const mockData = [
-    {
-        beginTime: '10:10',
-        endTime: '10:30',
-        content: 'CR - captcha 和  validation code 的区别',
-        tags: ['CR']
-    },
-    {
-        beginTime: '10:30',
-        endTime: '11:05',
-        content: '小程序交互方案review&梳理',
-        tags: []
-    },
-    {
-        beginTime: '11:05',
-        endTime: '11:18',
-        content: 'HITV 联动站会',
-        tags: []
-    },
-    {
-        beginTime: '12:30',
-        endTime: '13:00',
-        content: '讨论 jsbridge 的模式，前端工具面板',
-        tags: []
-    },
-    {
-        beginTime: '13:00',
-        endTime: '14:14',
-        content: '小程序交互',
-        tags: []
-    },
-    {
-        beginTime: '15:50',
-        endTime: '16:38',
-        content: 'Tabs 开发  - props 关键词 key 问题，children ts 书写方式',
-        tags: []
-    },
-    {
-        beginTime: '16:38',
-        endTime: '17:00',
-        content: '企业平台延期问题讨论',
-        tags: []
-    },
-    {
-        beginTime: '19:00',
-        endTime: '19:46',
-        content: 'hitv 联动视觉还原',
-        tags: []
-    }
-];
+// const mockItem = {
+//     beginTime: '09:43',
+//     endTime: '10:20',
+//     content: (
+//         <>
+//             <div className="title">comment #01</div>
+//             <div className="info">
+//                 the best animation , the best toturials you would ever see .
+//             </div>
+//             <div className="name">- dr. mohamed -</div>
+//         </>
+//     ),
+//     tags: ['aaaa', 'bbb']
+// };
 
 const TimelineItem: React.FC<TimeItem> = (props: TimeItem) => {
     return (
-        <li className="timeline-item">
-             <div className="time">
+        <li className="timeline-item" style={props.style}>
+            <div className="time">
                 <span className="time-begin">
-                    {props.beginTime}
+                    {props.showStartTime
+                        ? dayjs(props.beginTime).format('HH:mm')
+                        : ''}
                 </span>
-                <span className="time-end">{props.endTime}</span>
+                <span className="time-end">
+                    {dayjs(props.endTime).format('HH:mm')}
+                </span>
             </div>
             <span className="line"></span>
             <div className="content">
                 {props.content}
                 <div>
-                    {props.tags.map(tag => {
-                        return <span className="tag">{tag}</span>
+                    {props.tags.map((tag, index) => {
+                        return (
+                            <span className="tag" key={index}>
+                                {tag}
+                            </span>
+                        );
                     })}
                 </div>
             </div>
         </li>
     );
 };
+
+const getMarginTop = (prev: Date, curr: Date) => {
+    if (!prev || !curr) {
+        return 10;
+    }
+    const MAX_MARGIN = 80;
+    const beginTime = dayjs(curr);
+    const diffMs = beginTime.diff(dayjs(prev)) / 1000 / 60;
+    if (diffMs > MAX_MARGIN) {
+        return MAX_MARGIN;
+    }
+    return diffMs;
+};
+const getMinHeight = (start: Date, end: Date) => {
+    const diffMs = dayjs(end).diff(dayjs(start));
+    return diffMs / 1000 / 60;
+};
 const Timeline: React.FunctionComponent<TimelineProps> = props => {
-    return <ul className="timeline">
-        {/* {} */}
-        <TimelineItem {...mockItem}/>
-        <TimelineItem {...mockItem}/>
-    </ul>;
+    let prevEndTime: Date;
+    return (
+        <ul className="timeline">
+            {/* <TimeRuler /> */}
+            {props.items.map((item, index) => {
+                // @todo: 根据时间粒度，生成 min-height 和 margin 传入
+                const marginTop = getMarginTop(prevEndTime, item.beginTime);
+                const minHeight = getMinHeight(item.beginTime, item.endTime);
+                console.log('diff', marginTop, minHeight);
+                console.log(marginTop !== 0);
+                prevEndTime = item.endTime;
+
+                return (
+                    <TimelineItem
+                        {...item}
+                        style={{
+                            marginTop,
+                            minHeight
+                        }}
+                        showStartTime={marginTop !== 0}
+                        key={index}
+                    />
+                );
+            })}
+        </ul>
+    );
 };
 
 export default Timeline;

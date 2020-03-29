@@ -66,6 +66,7 @@
   "dependencies": {
     "@befe/brick-hi": "^0.1.58",
     "classnames": "^2.2.6",
+    "dayjs": "^1.8.23",
     "electron-squirrel-startup": "^1.0.0",
     "fs-extra": "^9.0.0",
     "lodash-es": "^4.17.15",

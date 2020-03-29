@@ -1,17 +1,18 @@
 @import '../../var.scss';
-$dot-size: 10px;
-$line-margin: 80px;
+$dot-size: 6px;
+$line-margin: 60px;
 .timeline {
     list-style-type: none;
-    margin: 0;
+    margin: 30px 0;
     padding: 0;
     position: relative;
+    font-size: 13px;
     &:before {
         content: '';
         display: block;
         width: 0;
         height: 100%;
-        border: 1px dashed $color-white;
+        border: 1px dashed $color-text-helper;
         position: absolute;
         top: 0;
         left: $line-margin;
@@ -21,25 +22,24 @@ $line-margin: 80px;
 .timeline-item {
     position: relative;
     display: flex;
-    margin: 40px 0;
     .time {
         flex-direction: column;
         display: flex;
         justify-content: space-between;
         & > span {
-            color: $color-white;
+            color: $color-text-helper;
             font-weight: bold;
         }
-        width: $line-margin - 20;
+        width: $line-margin - 10;
         text-align: right;
         .time-begin, .time-end {
             position: relative;
         }
         .time-begin {
-            top: -$dot-size / 2;
+            top: -$dot-size;
         }
         .time-end {
-            bottom: -$dot-size / 2;
+            bottom: -$dot-size;
         }
     }
 
@@ -47,7 +47,7 @@ $line-margin: 80px;
         position: absolute;
         display: block;
         height: 100%;
-        border: 1px solid $color-white;
+        border: 1px solid $color-pink;
         left: $line-margin;
         &:before,
         &:after {
@@ -57,9 +57,9 @@ $line-margin: 80px;
             height: $dot-size;
             border-radius: 50%;
             background: $color-pink;
-            border: 2px solid $color-white;
+            // border: 2px solid $color-text-helper;
             position: absolute;
-            left: -($dot-size + 4) / 2;
+            left: -($dot-size) / 2;
         }
         &:before {
             top: -$dot-size / 2;
@@ -70,19 +70,55 @@ $line-margin: 80px;
     }
 
     .content {
-        margin: 10px 40px;
-        padding: 10px 20px;
-        background: rgba(255, 255, 255, 0.3);
-        color: $color-white;
-        border-radius: 10px;
+        position: relative;
+        margin: 10px 30px;
+        padding: 5px 9px;
+        background: #e2e1f0;
+        color: $color-text-main;
+        border-radius: 5px;
         line-height: 1.5;
         width: 460px;
-        .tag {
-            font-size: 12px;
-            background-color: lighten($color-blue, 20);
-            padding: 2px 6px;
-            margin-right: 10px;
-            border-radius: 5px;
+        
+    }
+}
+
+.time-ruler {
+    position: absolute;
+    left: $line-margin;
+    top: 0;
+    height: 100%;
+    width: 20px;
+    font-size: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: #888;
+    .time-ruler-item {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        min-height: 50px;
+    }
+    .ruler-line {
+        height: 1px;
+        background-color: #ccc;
+        &.line1 {
+            width: 100%
+        }
+        &.line2 {
+            width: 80%;
         }
     }
+}
+// @todo: tag component
+.tag {
+    font-size: 10px;
+    color: darken($color-blue, 20);
+    background-color: lighten($color-blue, 50);
+    padding: 2px 6px;
+    margin-top: 8px;
+    margin-right: 8px;
+    border-radius: 3px;
+   
 }
