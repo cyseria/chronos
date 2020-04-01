@@ -32,7 +32,7 @@ const formatTime = (sec: number, type: string = 'h:m:s') => {
     return result;
 };
 
-const praseDateToSeconds = (date: Date) => {
+const parseDateToSecond = (date: Date) => {
     return date.getHours() * 3600 + date.getMinutes() * 60 + date.getSeconds();
 };
 
@@ -47,13 +47,13 @@ export const Timer: React.FC<TimerProps> = (props: TimerProps) => {
     const isDefaultTiming = (time: number) => time === defaultEndTime;
     useInterval(() => {
         if (isDefaultTiming(totalTime)) {
-            setSecond(praseDateToSeconds(new Date()));
+            setSecond(parseDateToSecond(new Date()));
         } else {
             setSecond(second + 1);
         }
         if (second === totalTime) {
             // 完成了一个时间，可以重新开始
-            setSecond(praseDateToSeconds(new Date()));
+            setSecond(parseDateToSecond(new Date()));
             setTotalTime(defaultEndTime);
         }
     }, 1000);
