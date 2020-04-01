@@ -13,13 +13,23 @@ $font-color-dark: $color-dark;
     position: relative;
 
     .progress-percents {
-        color: #ccc;
-        font-size: 33px;
-        position: absolute;
-        transform: rotateZ(10deg);
-        opacity: 0.7;
-        right: 6px;
-        top: 3px;
+        z-index: 1;
+        span {
+            color: #bbb;
+            position: absolute;
+            transform: rotateZ(6deg);
+            opacity: 0.3;
+        }
+        &-1 {
+            left: 6px;
+            top: -20px;
+            font-size: 80px;
+        }
+        &-2 {
+            right: 6px;
+            top: -10px;
+            font-size: 60px;
+        }
     }
     
     .progress-content {
