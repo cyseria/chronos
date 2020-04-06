@@ -9,8 +9,16 @@ import { mockData } from './mock';
 import Editor, { Element } from '../../components/Editor';
 import { SvgScaleUp, SvgHiFace } from '@befe/brick-icon';
 import { SvgTaiyang } from '../../images/icon';
-import { Node } from 'slate';
+import { Node } from 'slate';
+
+import { useLocalStore } from 'mobx-react-lite';
+import {
+    chronosAppState,
+    ChronosAppState
+} from '../../state/singleton-chronos-app-state';
+
 const { dialog } = require('electron').remote;
+
 interface TimerProps {}
 
 /**
@@ -33,13 +41,12 @@ const formatTime = (sec: number, type: string = 'h:m:s') => {
     return result;
 };
 
-const praseDateToSeconds = (date: Date) => {
+const parseDateToSecond = (date: Date) => {
     return date.getHours() * 3600 + date.getMinutes() * 60 + date.getSeconds();
 };
 
 const defaultBeginTime = 0;
 const defaultEndTime = 24 * 60 * 60; // 默认一天时间的秒数
-
 
 const initialValue = [
     {
@@ -61,15 +68,16 @@ export const Timer: React.FC<TimerProps> = (props: TimerProps) => {
     const [editorValue, setEditorValue] = React.useState<Node[]>(initialValue);
 
     const isDefaultTiming = (time: number) => time === defaultEndTime;
+
     useInterval(() => {
         if (isDefaultTiming(totalTime)) {
-            setSecond(praseDateToSeconds(new Date()));
+            setSecond(parseDateToSecond(new Date()));
         } else {
             setSecond(second + 1);
         }
         if (second === totalTime) {
             // 完成了一个时间，可以重新开始
-            setSecond(praseDateToSeconds(new Date()));
+            setSecond(parseDateToSecond(new Date()));
             setTotalTime(defaultEndTime);
         }
     }, 1000);
@@ -86,11 +94,23 @@ export const Timer: React.FC<TimerProps> = (props: TimerProps) => {
     };
 
     const InitButton = (props: { num: number }) => {
+        // @todo:demo
+        const app = useLocalStore<ChronosAppState>(() => chronosAppState);
+
+        const local = useLocalStore(source => {
+            return {
+                add() {
+                    app.total += source.num;
+                }
+            };
+        }, props);
+
         return (
             <Button
                 size="xs"
                 onClick={() => {
                     handleResetTime(props.num * 60);
+                    local.add();
                 }}
             >
                 {props.num}
@@ -109,24 +129,24 @@ export const Timer: React.FC<TimerProps> = (props: TimerProps) => {
 
     const handleTextareaChange = (val: Node[]) => {
         setEditorValue(val);
-    }
+    };
     const handleSubmit = () => {
         console.log(editorValue);
-        const eleArr = editorValue.map(ele =>{
-            console.log(ele)
-            return <Element key={ele} {...ele} />
-        })
+        const eleArr = editorValue.map(ele => {
+            console.log(ele);
+            return <Element key={ele} {...ele} />;
+        });
         list.push({
             beginTime: new Date(),
             endTime: new Date(),
             content: eleArr,
             tags: []
-        })
+        });
         setList(list);
-    }
-    const handleRenderHtml = (html) => {
-        console.log(html)
-    }
+    };
+    const handleRenderHtml = html => {
+        console.log(html);
+    };
     return (
         <>
             <header className="time-header">
@@ -160,10 +180,16 @@ export const Timer: React.FC<TimerProps> = (props: TimerProps) => {
 
             <div className="editor">
                 <Icon className="editor-scale-icon" svg={SvgScaleUp} />
-                <Editor value={editorValue} onChange={handleTextareaChange} onRenderHtml={handleRenderHtml}/>
+                <Editor
+                    value={editorValue}
+                    onChange={handleTextareaChange}
+                    onRenderHtml={handleRenderHtml}
+                />
             </div>
             <div className="time-footer">
-                <Button type="important" onClick={handleSubmit}>提交</Button>
+                <Button type="important" onClick={handleSubmit}>
+                    提交
+                </Button>
             </div>
         </>
     );
