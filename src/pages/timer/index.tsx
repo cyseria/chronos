@@ -1,15 +1,16 @@
 import * as React from 'react';
 import { Progress } from '../../components/Progress';
-import Timeline from '../../components/Timeline';
+import Timeline, { TimeItem } from '../../components/Timeline';
 import './index.scss';
 import { Button, InputNumber, Icon } from '@befe/brick-hi';
 import { useInterval } from '../../utils/time';
 import dayjs from 'dayjs';
 import { mockData } from './mock';
-import Editor from '../../components/Editor';
+import Editor, { Element } from '../../components/Editor';
 import { SvgScaleUp, SvgHiFace } from '@befe/brick-icon';
 import { SvgTaiyang } from '../../images/icon';
-
+import { Node } from 'slate';
+const { dialog } = require('electron').remote;
 interface TimerProps {}
 
 /**
@@ -39,10 +40,25 @@ const praseDateToSeconds = (date: Date) => {
 const defaultBeginTime = 0;
 const defaultEndTime = 24 * 60 * 60; // 默认一天时间的秒数
 
+
+const initialValue = [
+    {
+        type: 'paragraph',
+        children: [
+            {
+                text: ''
+            }
+        ]
+    }
+];
+
 export const Timer: React.FC<TimerProps> = (props: TimerProps) => {
+    const [list, setList] = React.useState<TimeItem[]>(mockData);
     // 计算当前过了多少秒
     const [second, setSecond] = React.useState(0);
     const [totalTime, setTotalTime] = React.useState(defaultEndTime);
+
+    const [editorValue, setEditorValue] = React.useState<Node[]>(initialValue);
 
     const isDefaultTiming = (time: number) => time === defaultEndTime;
     useInterval(() => {
@@ -81,6 +97,36 @@ export const Timer: React.FC<TimerProps> = (props: TimerProps) => {
             </Button>
         );
     };
+
+    const handleFinished = () => {
+        const options = {
+            buttons: ['是', '否'],
+            message: '倒计时已结束，是否要开启下一个计时？'
+        };
+        const response = dialog.showMessageBox(options);
+    };
+    const handleCancel = () => {};
+
+    const handleTextareaChange = (val: Node[]) => {
+        setEditorValue(val);
+    }
+    const handleSubmit = () => {
+        console.log(editorValue);
+        const eleArr = editorValue.map(ele =>{
+            console.log(ele)
+            return <Element key={ele} {...ele} />
+        })
+        list.push({
+            beginTime: new Date(),
+            endTime: new Date(),
+            content: eleArr,
+            tags: []
+        })
+        setList(list);
+    }
+    const handleRenderHtml = (html) => {
+        console.log(html)
+    }
     return (
         <>
             <header className="time-header">
@@ -94,13 +140,14 @@ export const Timer: React.FC<TimerProps> = (props: TimerProps) => {
                     <InitButton num={30} />
                     <InitButton num={45} />
                     <InitButton num={60} />
-                    <Button size="xs" icon={SvgHiFace}>
+                    <Button size="xs" icon={SvgHiFace} onClick={handleFinished}>
                         自定义
                     </Button>
                 </div>
             </header>
 
             <Progress
+                onCancel={handleCancel}
                 isDefaultTiming={isDefaultTiming(totalTime)}
                 beginText={formatTime(defaultBeginTime, 'h:m')}
                 endText={formatTime(totalTime, 'h:m')}
@@ -108,15 +155,15 @@ export const Timer: React.FC<TimerProps> = (props: TimerProps) => {
                 progress={progress}
             />
             <div className="timeline-wrap">
-                <Timeline items={mockData} />
+                <Timeline items={list} />
             </div>
 
             <div className="editor">
                 <Icon className="editor-scale-icon" svg={SvgScaleUp} />
-                <Editor />
+                <Editor value={editorValue} onChange={handleTextareaChange} onRenderHtml={handleRenderHtml}/>
             </div>
             <div className="time-footer">
-                <Button type="important">提交</Button>
+                <Button type="important" onClick={handleSubmit}>提交</Button>
             </div>
         </>
     );

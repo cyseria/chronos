@@ -64,12 +64,16 @@
     }
   },
   "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-transform-runtime": "^7.9.0",
     "@befe/brick-hi": "^0.1.58",
     "classnames": "^2.2.6",
     "dayjs": "^1.8.23",
     "electron-squirrel-startup": "^1.0.0",
     "fs-extra": "^9.0.0",
     "lodash-es": "^4.17.15",
+    "mobx": "^5.15.4",
+    "mobx-react": "^6.1.8",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "slate": "^0.57.1",
@@ -77,6 +81,7 @@
     "slate-react": "^0.57.1"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-decorators": "^7.8.3",
     "@electron-forge/cli": "^6.0.0-beta.46",
     "@electron-forge/maker-deb": "^6.0.0-beta.46",
     "@electron-forge/maker-rpm": "^6.0.0-beta.46",

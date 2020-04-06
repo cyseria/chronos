@@ -8,7 +8,7 @@ import * as React from 'react';
 import './index.scss';
 import dayjs from 'dayjs';
 
-interface TimeItem extends React.HTMLAttributes<HTMLDivElement> {
+export interface TimeItem extends React.HTMLAttributes<HTMLDivElement> {
     beginTime: Date;
     endTime: Date;
     content: string | React.ReactNode;

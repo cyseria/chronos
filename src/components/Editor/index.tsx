@@ -1,10 +1,5 @@
 import React, { useState, useCallback, useMemo } from 'react';
-import {
-    Slate,
-    Editable,
-    withReact,
-    ReactEditor
-} from 'slate-react';
+import { Slate, Editable, withReact, ReactEditor } from 'slate-react';
 import './index.scss';
 import { Editor, Transforms, Range, Point, createEditor, Node } from 'slate';
 import { withHistory } from 'slate-history';
@@ -25,9 +20,17 @@ const SHORTCUTS: SHORTCUTSMap = {
     '######': 'heading-six'
 };
 
-const MarkdownShortcuts = () => {
-    const [value, setValue] = useState<Node[]>(initialValue);
-    const renderElement = useCallback(props => <Element {...props} />, []);
+interface MarkdownShortcutsProps {
+    value: Node[]
+    onChange: (value: Node[]) => void
+    onRenderHtml: (html: JSX.Element) => void
+}
+const MarkdownShortcuts = (props: MarkdownShortcutsProps) => {
+    const renderElement = useCallback(prop => {
+        const ele = <Element {...prop} />;
+        props.onRenderHtml(ele)
+        return ele;
+    }, []);
     const editor = useMemo(
         () => withShortcuts(withReact(withHistory(createEditor()))),
         []
@@ -36,8 +39,8 @@ const MarkdownShortcuts = () => {
         <Slate
             className="time-editor-content"
             editor={editor}
-            value={value}
-            onChange={value => setValue(value)}
+            value={props.value}
+            onChange={value => props.onChange(value)}
         >
             <Editable
                 renderElement={renderElement}
@@ -125,8 +128,7 @@ const withShortcuts = (editor: ReactEditor) => {
     return editor;
 };
 
-
-const Element = (props: any) => {
+export const Element = (props: any) => {
     const { attributes, children, element } = props;
     switch (element.type) {
         case 'block-quote':
@@ -157,11 +159,10 @@ const initialValue = [
         type: 'paragraph',
         children: [
             {
-                text:
-                    ''
+                text: ''
             }
         ]
-    },
+    }
 ];
 
 export default MarkdownShortcuts;

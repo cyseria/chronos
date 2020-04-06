@@ -31,7 +31,7 @@ $font-color-dark: $color-dark;
             font-size: 60px;
         }
     }
-    
+
     .progress-content {
         display: flex;
         align-items: baseline;
@@ -44,7 +44,7 @@ $font-color-dark: $color-dark;
         overflow-wrap: break-word;
         font-size: 13px;
     }
-    
+
     $progress-line: 20px;
     .progress-line {
         position: relative;
@@ -103,7 +103,8 @@ $font-color-dark: $color-dark;
                 border-left: 5px solid transparent;
             }
         }
-        .person-icon {
+       
+        .progress-icon {
             cursor: pointer;
             font-size: $cur-icon-size;
         }
@@ -111,5 +112,10 @@ $font-color-dark: $color-dark;
     .progress-tips {
         margin-top: 6px;
         text-align: center;
+    }
+    .progress-icon-closed {
+        position: absolute;
+        top: -8px;
+        right: -8px;
     }
 }
