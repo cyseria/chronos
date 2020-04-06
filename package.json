@@ -13,10 +13,16 @@
     "lint": "echo \"No linting configured\""
   },
   "keywords": [],
-  "author": {
-    "name": "zhengliangliang",
-    "email": "zhengliangliang@baidu.com"
-  },
+  "author": [
+    {
+      "name": "Manqing Chen",
+      "email": "TBA"
+    },
+    {
+      "name": "Liangliang Zheng",
+      "email": "jspop_no1@hotmail.com"
+    }
+  ],
   "license": "MIT",
   "config": {
     "forge": {
@@ -70,6 +76,9 @@
     "electron-squirrel-startup": "^1.0.0",
     "fs-extra": "^9.0.0",
     "lodash-es": "^4.17.15",
+    "mobx": "^5.15.4",
+    "mobx-react": "^6.1.8",
+    "mobx-react-lite": "^1.5.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "slate": "^0.57.1",
