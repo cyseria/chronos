@@ -54,13 +54,15 @@ export const Timer: React.FC<TimerProps> = (props: TimerProps) => {
         setEditorValue(e.target.value);
     };
     const handleSubmit = () => {
-        list.push({
-            beginTime: new Date(),
+        const newList = list;
+        newList.push({
+            beginTime: store.lastRecordTime,
             endTime: new Date(),
             content: editorValue,
             tags: []
         });
-        setList(list);
+        setList(newList);
+        
     };
 
     return useObserver(() => (

@@ -11,6 +11,9 @@ export class TimerStore {
     // 总共倒计时时间
     @observable totalTime = defaultEndTime;
 
+    // @todo: 用于记录上次开始的时间
+    @observable lastRecordTime = new Date();
+
     @computed
     get progress() {
         return ((this.passedSecond / this.totalTime) * 100).toFixed(1);
@@ -18,9 +21,7 @@ export class TimerStore {
     @computed
     get curPassedTime() {
         const totalHour = Math.floor(this.totalTime / 3600);
-
         const curPassedTime = totalHour === 0 ? formatTime(this.passedSecond, 'm:s') : formatTime(this.passedSecond);
-        console.log(curPassedTime)
         return curPassedTime;
     }
 
@@ -33,6 +34,7 @@ export class TimerStore {
     resetTime(total: number) {
         this.passedSecond = 0;
         this.totalTime = total;
+        this.lastRecordTime = new Date();
     }
 
     @action update() {
@@ -45,8 +47,8 @@ export class TimerStore {
             this.passedSecond = this.passedSecond + 1;
         }
 
+        // 完成了一个时间，可以重新开始
         if (this.passedSecond === this.totalTime) {
-            // 完成了一个时间，可以重新开始
             this.passedSecond = parseDateToSecond(new Date());
             this.totalTime = defaultEndTime;
         }

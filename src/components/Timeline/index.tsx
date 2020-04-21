@@ -8,7 +8,6 @@ import * as React from 'react';
 import './index.scss';
 import dayjs from 'dayjs';
 import {useLocalStore, Observer} from 'mobx-react-lite';
-import {chronosAppState} from '../../store/singleton-chronos-app-state';
 
 export interface TimeItem extends React.HTMLAttributes<HTMLDivElement> {
     beginTime: Date;
@@ -26,6 +25,7 @@ interface TimelineProps {
 }
 
 const TimelineItem: React.FC<TimeItem> = (props: TimeItem) => {
+    
     return (
         <li className="timeline-item" style={props.style}>
             <div className="time">
@@ -74,8 +74,6 @@ const getMinHeight = (start: Date, end: Date) => {
 const Timeline: React.FunctionComponent<TimelineProps> = props => {
     let prevEndTime: Date;
 
-    let app = useLocalStore(() => chronosAppState);
-
     return (
         <ul className="timeline">
             {/* <TimeRuler /> */}
@@ -96,10 +94,6 @@ const Timeline: React.FunctionComponent<TimelineProps> = props => {
                     />
                 );
             })}
-            <li>
-                {/*@todo:demo*/}
-                <Observer>{() => <div>{chronosAppState.total}</div>}</Observer>
-            </li>
         </ul>
     );
 };
