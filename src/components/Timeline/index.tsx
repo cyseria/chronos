@@ -8,7 +8,7 @@ import * as React from 'react';
 import './index.scss';
 import dayjs from 'dayjs';
 import {useLocalStore, Observer} from 'mobx-react-lite';
-import {chronosAppState} from '../../state/singleton-chronos-app-state';
+import {chronosAppState} from '../../store/singleton-chronos-app-state';
 
 export interface TimeItem extends React.HTMLAttributes<HTMLDivElement> {
     beginTime: Date;
