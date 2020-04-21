@@ -144,7 +144,7 @@ export const Timer: React.FC<TimerProps> = (props: TimerProps) => {
         });
         setList(list);
     };
-    const handleRenderHtml = html => {
+    const handleRenderHtml = (html: any) => {
         console.log(html);
     };
     return (
