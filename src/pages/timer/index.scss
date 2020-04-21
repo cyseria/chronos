@@ -14,18 +14,18 @@
 }
 .editor {
     position: relative;
-    border: 1px solid #ccc;
-    padding: 14px 10px;
-    height: 200px;
+    // border: 1px solid #ccc;
+    // padding: 14px 10px;
+    // height: 200px;
     .editor-scale-icon {
         position: absolute;
         right: 0;
         top: 0;
     }
-    [data-slate-editor=true] {
-        height: 100%;
-        overflow: scroll;
-    }
+    // [data-slate-editor=true] {
+    //     height: 100%;
+    //     overflow: scroll;
+    // }
 }
 .time-footer {
     margin-top: 10px;
